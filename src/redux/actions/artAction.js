@@ -1,0 +1,94 @@
+import {
+  getData,
+  getDetailData,
+  //   searchArtData,
+} from '../../hooks/apiRequest/articAPI';
+
+export const getAll = page => {
+  return async dispatch => {
+    dispatch({
+      type: 'GET_ART_REQUEST',
+    });
+
+    try {
+      const result = await getData(page);
+      if (result.status === 200) {
+        dispatch({
+          type: 'GET_ART_SUCCESS',
+          payload: {
+            pagination: result.data.pagination,
+            data: result.data.data.map(item => ({
+              id: item.id,
+              thumbnail: item.thumbnail,
+            })),
+          },
+        });
+      } else {
+        dispatch({
+          type: 'GET_ART_FAILED',
+          error: result,
+        });
+      }
+    } catch (err) {
+      dispatch({
+        type: 'GET_ART_FAILED',
+        error: err,
+      });
+    }
+  };
+};
+
+export const getDetail = id => {
+  return async dispatch => {
+    dispatch({
+      type: 'GET_DETAIL_ART_REQUEST',
+    });
+
+    try {
+      const result = await getDetailData(id);
+      if (result.status === 200) {
+        dispatch({
+          type: 'GET_DETAIL_ART_SUCCESS',
+          payload: result.data.data,
+        });
+      } else {
+        dispatch({
+          type: 'GET_DETAIL_ART_FAILED',
+          error: result,
+        });
+      }
+    } catch (err) {
+      dispatch({
+        type: 'GET_DETAIL_ART_FAILED',
+        error: err,
+      });
+    }
+  };
+};
+
+export const clearSelected = () => {
+  return async dispatch => {
+    dispatch({
+      type: 'CLEAR_SELECTED_ART',
+    });
+  };
+};
+
+export const saveArt = art => {
+  return async dispatch => {
+    console.log('Art => ', art);
+    dispatch({
+      type: 'SAVE_ART',
+      payload: art,
+    });
+  };
+};
+
+export const removeArt = art => {
+  return async dispatch => {
+    dispatch({
+      type: 'REMOVE_ART',
+      payload: art,
+    });
+  };
+};
