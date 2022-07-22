@@ -1,6 +1,7 @@
 import {
   getData,
   getDetailData,
+  searchDataArt,
   //   searchArtData,
 } from '../../hooks/apiRequest/articAPI';
 
@@ -90,5 +91,35 @@ export const removeArt = art => {
       type: 'REMOVE_ART',
       payload: art,
     });
+  };
+};
+
+export const searchData = query => {
+  return async dispatch => {
+    dispatch({
+      type: 'SEARCH_DATA_ART_REQUEST',
+    });
+
+    try {
+      console.log('sada');
+      const result = await searchDataArt(query);
+      console.log('Res => ', result);
+      if (result.status === 200) {
+        dispatch({
+          type: 'SEARCH_DATA_ART_SUCCESS',
+          payload: result.data.data,
+        });
+      } else {
+        dispatch({
+          type: 'SEARCH_DATA_ART_FAILED',
+          error: result,
+        });
+      }
+    } catch (err) {
+      dispatch({
+        type: 'SEARCH_DATA_ART_FAILED',
+        error: err,
+      });
+    }
   };
 };

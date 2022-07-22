@@ -15,3 +15,11 @@ export const getDetailData = async id => {
     throw error;
   }
 };
+
+export const searchDataArt = async query => {
+  try {
+    return await fetchArticAPI('GET', `artworks/search?q=${query}`, {});
+  } catch (error) {
+    throw error;
+  }
+};

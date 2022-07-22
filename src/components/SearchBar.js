@@ -7,18 +7,33 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {useDispatch, useSelector} from 'react-redux';
+import {searchData, searchOFF, searchON} from '../redux/actions/artAction';
+
 const {width, height} = Dimensions.get('window');
 
-const SearchBar = () => {
+const SearchBar = ({isEnabled, isFocus}) => {
+  const dispatch = useDispatch();
+  const isSearch = useSelector(state => state.artReducer.isSearch);
   return (
     <View style={styles.searchBar}>
       <View style={styles.inputStyle}>
-        <Icon name="search" size={20} color="#900" />
+        {isFocus ? (
+          <Icon name="arrow-back" size={25} color="#900" />
+        ) : (
+          <Icon name="search" size={25} color="#900" />
+        )}
         <View style={{flex: 1}}>
           <TextInput
             placeholder={'Type your search here'}
             style={{flex: 1, textAlign: 'center'}}
+            onSubmitEditing={e => {
+              dispatch(searchData(e.nativeEvent.text));
+              console.log(e.nativeEvent.text);
+            }}
+            editable={isEnabled}
+            autoFocus={isFocus}
           />
         </View>
         {/* <TouchableOpacity>
@@ -37,20 +52,20 @@ const styles = StyleSheet.create({
   searchBar: {
     backgroundColor: '#FFF',
     flex: 1,
-    padding: 5,
+    paddingTop: 5,
+    paddingBottom: 10,
+    paddingHorizontal: 5,
+    zIndex: 1,
   },
   inputStyle: {
     top: 10,
-    width: width * 0.975,
+    width: width * 0.965,
     height: 45,
-    borderColor: '#900',
-    borderWidth: 2,
-    borderRadius: 25,
+    borderRadius: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 5,
     paddingHorizontal: 20,
     paddingVertical: 2,
-    backgroundColor: '#FFF',
+    backgroundColor: '#EEE',
   },
 });

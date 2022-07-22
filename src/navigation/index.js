@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import BottomMenuBar from './BottomMenuBar';
 import Detail from '../screens/Detail';
+import Search from '../screens/Search';
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,11 @@ const Navigation = () => {
         <Stack.Screen
           name="Detail"
           component={Detail}
+          screenOptions={{headerShown: true, headerMode: 'float'}}
+        />
+        <Stack.Screen
+          name="Search"
+          component={Search}
           screenOptions={{headerShown: true, headerMode: 'float'}}
         />
       </Stack.Navigator>

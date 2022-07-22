@@ -3,12 +3,13 @@ const defaultState = {
   arts: [],
   detailArt: {},
   savedArt: [],
+  isSearch: false,
+  searchedData: {},
 };
 
 export default (state = defaultState, action = {}) => {
   switch (action.type) {
     case 'GET_ART_SUCCESS': {
-      console.log('Payload => ', action.payload);
       return {
         ...state,
         pagination: action.payload.pagination,
@@ -39,12 +40,19 @@ export default (state = defaultState, action = {}) => {
     }
 
     case 'REMOVE_ART': {
-      console.log('Remove => ', action.payload.id);
       return {
         ...state,
         savedArt: state.savedArt.filter(art => art.id !== action.payload.id),
       };
     }
+
+    case 'SEARCH_DATA_ART_SUCCESS': {
+      return {
+        ...state,
+        searchedData: action.payload,
+      };
+    }
+
     default:
       return state;
   }

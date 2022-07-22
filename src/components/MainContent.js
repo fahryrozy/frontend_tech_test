@@ -7,34 +7,15 @@ import {
   FlatList,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {getAll} from '../redux/actions/artAction';
+
 const {width, height} = Dimensions.get('window');
 
-const MainContent = ({navigation}) => {
-  const [page, setPage] = useState(1);
-  const dispatch = useDispatch();
-  const arts = useSelector(state => state.artReducer.arts);
-  const pagination = useSelector(state => state.artReducer.pagination);
-
-  const fetchMoreArts = () => {
-    console.log('End Reached ', page);
-    if (pagination.current_page < pagination.total_pages) {
-      setPage(page + 1);
-    }
-  };
-
-  useEffect(() => {
-    dispatch(getAll(page));
-    // if (Object.keys(arts).length > 0) {
-    //   console.log('Test 2 => ', arts);
-    // }
-  }, [page]);
+const MainContent = ({navigation, data, fetchMore}) => {
   return (
     <View style={styles.container}>
-      {Object.keys(arts).length > 0 && (
+      {Object.keys(data).length > 0 && (
         <FlatList
-          data={arts}
+          data={data}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item}) => {
             if (
@@ -56,7 +37,7 @@ const MainContent = ({navigation}) => {
           }}
           numColumns={3}
           onEndReachedThreshold={0.4}
-          onEndReached={fetchMoreArts}
+          onEndReached={fetchMore}
         />
       )}
     </View>
