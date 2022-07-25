@@ -5775,7 +5775,7 @@
   "resolved" "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.0.7.tgz"
   "version" "0.0.7"
 
-"react-native-linear-gradient@>=2.4.0":
+"react-native-linear-gradient@^2.6.2", "react-native-linear-gradient@>=2.4.0":
   "integrity" "sha512-Z8Xxvupsex+9BBFoSYS87bilNPWcRfRsGC0cpJk72Nxb5p2nEkGSBv73xZbEHnW2mUFvP+huYxrVvjZkr/gRjQ=="
   "resolved" "https://registry.npmjs.org/react-native-linear-gradient/-/react-native-linear-gradient-2.6.2.tgz"
   "version" "2.6.2"
@@ -5969,6 +5969,11 @@
   "resolved" "https://registry.npmjs.org/redux-devtools-extension/-/redux-devtools-extension-2.13.9.tgz"
   "version" "2.13.9"
 
+"redux-persist@^6.0.0":
+  "integrity" "sha512-71LLMbUq2r02ng2We9S215LtPu3fY0KgaGE0k8WRgl6RkqxtGfl7HUozz1Dftwsb0D/5mZ8dwAaPbtnzfvbEwQ=="
+  "resolved" "https://registry.npmjs.org/redux-persist/-/redux-persist-6.0.0.tgz"
+  "version" "6.0.0"
+
 "redux-promise-middleware@^6.1.2":
   "integrity" "sha512-ZqZu/nnSzGgwTtNbGoGVontpk7LjTOv0kigtt3CcgXI9gpq+8WlfXTXRZD0WTD5yaohRq0q2nYmJXSTjwXs83Q=="
   "resolved" "https://registry.npmjs.org/redux-promise-middleware/-/redux-promise-middleware-6.1.2.tgz"
@@ -5979,7 +5984,7 @@
   "resolved" "https://registry.npmjs.org/redux-thunk/-/redux-thunk-2.4.1.tgz"
   "version" "2.4.1"
 
-"redux@^2.0.0 || ^3.0.0 || ^4.0.0", "redux@^3.1.0 || ^4.0.0", "redux@^4", "redux@^4.1.2", "redux@^4.2.0":
+"redux@^2.0.0 || ^3.0.0 || ^4.0.0", "redux@^3.1.0 || ^4.0.0", "redux@^4", "redux@^4.1.2", "redux@^4.2.0", "redux@>4.0.0":
   "integrity" "sha512-oSBmcKKIuIR4ME29/AeNUnl5L+hvBq7OaJWzaptTQJAntaPvxIJqfnjbaEiCzzaIz+XmVILfqAM3Ob0aXLPfjA=="
   "resolved" "https://registry.npmjs.org/redux/-/redux-4.2.0.tgz"
   "version" "4.2.0"

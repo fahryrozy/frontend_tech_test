@@ -1,9 +1,4 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import {View, TouchableWithoutFeedback, Text} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import SearchBar from '../components/SearchBar';
 import MainContent from '../components/MainContent';
@@ -14,7 +9,9 @@ const Home = ({navigation}) => {
   const arts = useSelector(state => state.artReducer.arts);
   const pagination = useSelector(state => state.artReducer.pagination);
   const [page, setPage] = useState(1);
+
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getAll(page));
   }, [page]);
