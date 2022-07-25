@@ -5,15 +5,21 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
+  Text,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
+import {useSelector} from 'react-redux';
+import MainContentSkeleton from './MainContentSkeleton';
 
 const {width, height} = Dimensions.get('window');
 
 const MainContent = ({navigation, data, fetchMore}) => {
+  const isLoading = useSelector(state => state.artReducer.isLoading);
   return (
     <View style={styles.container}>
-      {Object.keys(data).length > 0 && (
+      {isLoading == true ? (
+        <MainContentSkeleton />
+      ) : (
         <FlatList
           data={data}
           keyExtractor={(item, index) => index.toString()}

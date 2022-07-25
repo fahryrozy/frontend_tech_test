@@ -6,64 +6,70 @@ import {
   Dimensions,
   FlatList,
   TouchableOpacity,
+  SafeAreaView,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {removeArt, getDetail, saveArt} from '../redux/actions/artAction';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import BlankScreen from './BlankScreen';
 
 const {width, height} = Dimensions.get('window');
 
 const Saved = () => {
   const dispatch = useDispatch();
   const savedArt = useSelector(state => state.artReducer.savedArt);
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <FlatList
-        data={savedArt}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({item}) => (
-          <View style={styles.photoContainer}>
-            {Object.keys(item).length > 0 &&
-              Object.keys(item.image_id).length > 0 && (
-                <Image
-                  style={styles.thumbnail}
-                  source={{
-                    uri:
-                      `https://www.artic.edu/iiif/2/` +
-                      item.image_id +
-                      `/full/843,/0/default.jpg`,
-                  }}></Image>
-              )}
-            <View style={styles.panel}>
-              <View style={styles.header}>
-                <Text style={styles.title}>{item.title}</Text>
-              </View>
-              <View style={styles.action}>
-                <TouchableOpacity
-                  onPress={() => {
-                    dispatch(removeArt(item));
-                  }}>
-                  <FontAwesome name="trash" size={25} color="#900" />
-                </TouchableOpacity>
-              </View>
-            </View>
 
-            <View style={styles.description}>
-              <Text style={styles.label}>Inscriptions</Text>
-              <Text>
-                {item.inscriptions
-                  ? item.inscriptions
-                  : 'There is no description here'}
-              </Text>
+  if (Object.keys(savedArt).length <= 0) {
+    return <BlankScreen />;
+  } else {
+    return (
+      <SafeAreaView style={{flex: 1}}>
+        <FlatList
+          data={savedArt}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item}) => (
+            <View style={styles.photoContainer}>
+              {Object.keys(item).length > 0 &&
+                Object.keys(item.image_id).length > 0 && (
+                  <Image
+                    style={styles.thumbnail}
+                    source={{
+                      uri:
+                        `https://www.artic.edu/iiif/2/` +
+                        item.image_id +
+                        `/full/843,/0/default.jpg`,
+                    }}></Image>
+                )}
+              <View style={styles.panel}>
+                <View style={styles.header}>
+                  <Text style={styles.title}>{item.title}</Text>
+                </View>
+                <View style={styles.action}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      dispatch(removeArt(item));
+                    }}>
+                    <FontAwesome name="trash" size={25} color="#900" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <View style={styles.description}>
+                <Text style={styles.label}>Inscriptions</Text>
+                <Text>
+                  {item.inscriptions
+                    ? item.inscriptions
+                    : 'There is no description here'}
+                </Text>
+              </View>
             </View>
-          </View>
-        )}
-        style={styles.content}
-      />
-    </View>
-  );
+          )}
+          style={styles.content}
+        />
+      </SafeAreaView>
+    );
+  }
 };
 
 export default Saved;
@@ -87,7 +93,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
-  content: {},
+  content: {
+    flex: 1,
+    paddingHorizontal: width * 0.025,
+  },
   photoContainer: {
     paddingVertical: 20,
     backgroundColor: '#EEE',

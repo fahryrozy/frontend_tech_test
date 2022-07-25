@@ -1,0 +1,100 @@
+import {StyleSheet, Text, View, Dimensions, ScrollView} from 'react-native';
+import React from 'react';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+const {width, height} = Dimensions.get('window');
+
+const DetailSkeleton = () => {
+  return (
+    <View style={styles.container}>
+      <SkeletonPlaceholder>
+        <View style={styles.header}></View>
+      </SkeletonPlaceholder>
+      <View style={styles.content}>
+        <SkeletonPlaceholder>
+          <View style={styles.thumbnail}></View>
+        </SkeletonPlaceholder>
+        <View style={styles.panel}>
+          <MaterialIcons name={'favorite-border'} size={30} color={'#000'} />
+          <View style={styles.credit}>
+            <Text>Credit : </Text>
+          </View>
+          <View>
+            <Text></Text>
+          </View>
+        </View>
+
+        <View>
+          <Text style={styles.label}>Inscriptions</Text>
+        </View>
+        <SkeletonPlaceholder>
+          <View style={styles.infoSkeleton}></View>
+        </SkeletonPlaceholder>
+
+        <View>
+          <Text style={styles.label}>Provenance Text</Text>
+        </View>
+        <SkeletonPlaceholder>
+          <View style={styles.infoSkeleton}></View>
+        </SkeletonPlaceholder>
+
+        <View>
+          <Text style={styles.label}>Publication History</Text>
+        </View>
+        <SkeletonPlaceholder>
+          <View style={styles.infoSkeleton}></View>
+        </SkeletonPlaceholder>
+
+        <View>
+          <Text style={styles.label}>Exhibition History</Text>
+        </View>
+        <SkeletonPlaceholder>
+          <View style={styles.infoSkeleton}></View>
+        </SkeletonPlaceholder>
+      </View>
+    </View>
+  );
+};
+
+export default DetailSkeleton;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  header: {
+    width: width,
+    height: 40,
+  },
+  title: {
+    fontSize: 20,
+  },
+  content: {
+    marginTop: 10,
+    paddingHorizontal: width * 0.05,
+  },
+  thumbnail: {
+    width: width * 0.9,
+    height: width * 0.9,
+  },
+  panel: {
+    flexDirection: 'row',
+    height: 60,
+    paddingVertical: 5,
+  },
+  credit: {
+    width: width * 0.7,
+    marginLeft: width * 0.1,
+    paddingHorizontal: 10,
+  },
+  label: {
+    fontSize: 18,
+    fontWeight: '700',
+    paddingVertical: 5,
+  },
+  infoSkeleton: {
+    width: '100%',
+    height: height * 0.035,
+    marginBottom: 5,
+  },
+});

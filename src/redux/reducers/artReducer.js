@@ -5,26 +5,51 @@ const defaultState = {
   savedArt: [],
   isSearch: false,
   searchedData: {},
+  isLoading: false,
 };
 
 export default (state = defaultState, action = {}) => {
   switch (action.type) {
+    case 'GET_ART_REQUEST': {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
     case 'GET_ART_SUCCESS': {
       return {
         ...state,
+        isLoading: false,
         pagination: action.payload.pagination,
         arts: [...state.arts, ...action.payload.data],
       };
     }
-
-    case 'GET_DETAIL_ART_SUCCESS': {
+    case 'GET_ART_FAIL': {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    }
+    case 'GET_DETAIL_ART_REQUEST': {
       return {
         ...state,
         isLoading: true,
+      };
+    }
+    case 'GET_DETAIL_ART_SUCCESS': {
+      return {
+        ...state,
+        isLoading: false,
         detailArt: action.payload,
       };
     }
-
+    case 'GET_DETAIL_ART_FAIL': {
+      return {
+        ...state,
+        isLoading: false,
+        detailArt: action.payload,
+      };
+    }
     case 'CLEAR_SELECTED_ART': {
       return {
         ...state,
