@@ -18,11 +18,7 @@ const MainContent = ({navigation, data, fetchMore}) => {
           data={data}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item}) => {
-            if (
-              item !== null &&
-              item.thumbnail !== null &&
-              Object.keys(item.thumbnail).length > 1
-            ) {
+            if (item !== null) {
               return (
                 <TouchableOpacity
                   onPress={() => {
@@ -30,7 +26,12 @@ const MainContent = ({navigation, data, fetchMore}) => {
                   }}>
                   <Image
                     style={styles.card}
-                    source={{uri: item.thumbnail.lqip}}></Image>
+                    source={{
+                      uri:
+                        `https://www.artic.edu/iiif/2/` +
+                        item.image_id +
+                        `/full/843,/0/default.jpg`,
+                    }}></Image>
                 </TouchableOpacity>
               );
             }

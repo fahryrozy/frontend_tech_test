@@ -20,7 +20,7 @@ export const getAll = page => {
             pagination: result.data.pagination,
             data: result.data.data.map(item => ({
               id: item.id,
-              thumbnail: item.thumbnail,
+              image_id: item.image_id,
             })),
           },
         });
@@ -101,13 +101,17 @@ export const searchData = query => {
     });
 
     try {
-      console.log('sada');
       const result = await searchDataArt(query);
-      console.log('Res => ', result);
       if (result.status === 200) {
         dispatch({
           type: 'SEARCH_DATA_ART_SUCCESS',
-          payload: result.data.data,
+          payload: {
+            pagination: result.data.pagination,
+            data: result.data.data.map(item => ({
+              id: item.id,
+              image_id: item.image_id,
+            })),
+          },
         });
       } else {
         dispatch({

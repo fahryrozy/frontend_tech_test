@@ -49,7 +49,8 @@ export default (state = defaultState, action = {}) => {
     case 'SEARCH_DATA_ART_SUCCESS': {
       return {
         ...state,
-        searchedData: action.payload,
+        pagination: action.payload.pagination,
+        arts: action.payload.data,
       };
     }
 

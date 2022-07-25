@@ -26,12 +26,16 @@ const Saved = () => {
         renderItem={({item}) => (
           <>
             {Object.keys(item).length > 0 &&
-              Object.keys(item.thumbnail).length > 0 &&
-              item.thumbnail.lqip && (
+              Object.keys(item.image_id).length > 0 && (
                 <View style={styles.photoContainer}>
                   <Image
                     style={styles.thumbnail}
-                    source={{uri: item.thumbnail.lqip}}></Image>
+                    source={{
+                      uri:
+                        `https://www.artic.edu/iiif/2/` +
+                        item.image_id +
+                        `/full/843,/0/default.jpg`,
+                    }}></Image>
                 </View>
               )}
             <View style={styles.panel}>
@@ -67,7 +71,6 @@ const Saved = () => {
         )}
         style={styles.content}
       />
-      <Text>sad</Text>
     </View>
   );
 };

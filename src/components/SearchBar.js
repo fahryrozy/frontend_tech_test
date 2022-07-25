@@ -13,7 +13,7 @@ import {searchData, searchOFF, searchON} from '../redux/actions/artAction';
 
 const {width, height} = Dimensions.get('window');
 
-const SearchBar = ({isEnabled, isFocus}) => {
+const SearchBar = ({isEnabled, isFocus, navigation}) => {
   const dispatch = useDispatch();
   const isSearch = useSelector(state => state.artReducer.isSearch);
   return (
@@ -31,16 +31,12 @@ const SearchBar = ({isEnabled, isFocus}) => {
             onSubmitEditing={e => {
               dispatch(searchData(e.nativeEvent.text));
               console.log(e.nativeEvent.text);
+              navigation.navigate('Home', {});
             }}
             editable={isEnabled}
             autoFocus={isFocus}
           />
         </View>
-        {/* <TouchableOpacity>
-        <Text>
-          <Icon name="close" size={20} color="#900" />
-        </Text>
-      </TouchableOpacity> */}
       </View>
     </View>
   );

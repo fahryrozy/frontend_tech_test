@@ -4,11 +4,11 @@ import SearchBar from '../components/SearchBar';
 import {useSelector, useDispatch} from 'react-redux';
 import MainContent from '../components/MainContent';
 
-const Search = () => {
+const Search = ({navigation}) => {
   const searchedData = useSelector(state => state.artReducer.searchedData);
   return (
     <View style={{flex: 1, flexDirection: 'column'}}>
-      <SearchBar isEnabled={true} isFocus={true} />
+      <SearchBar isEnabled={true} isFocus={true} navigation={navigation} />
       <View
         style={{
           flex: 9,

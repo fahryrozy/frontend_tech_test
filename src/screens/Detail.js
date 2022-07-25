@@ -6,6 +6,7 @@ import {
   Dimensions,
   ScrollView,
   TouchableOpacity,
+  Animated,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
@@ -17,10 +18,13 @@ const {width, height} = Dimensions.get('window');
 const Detail = navigation => {
   const dispatch = useDispatch();
   const {id} = navigation.route.params;
+  const [liked, setLiked] = useState(false);
   const detailArt = useSelector(state => state.artReducer.detailArt);
+
   useEffect(() => {
     dispatch(getDetail(id));
   }, []);
+  console.log(detailArt);
   return (
     <View style={styles.container}>
       {detailArt.title !== null && (
@@ -36,21 +40,29 @@ const Detail = navigation => {
         </View>
       )}
       <ScrollView style={styles.content}>
-        {Object.keys(detailArt).length > 0 &&
-          Object.keys(detailArt.thumbnail).length > 0 &&
-          detailArt.thumbnail.lqip && (
-            <View style={styles.photoContainer}>
-              <Image
-                style={styles.thumbnail}
-                source={{uri: detailArt.thumbnail.lqip}}></Image>
-            </View>
-          )}
+        {Object.keys(detailArt).length > 0 && (
+          <View style={styles.photoContainer}>
+            <Image
+              style={styles.thumbnail}
+              source={{
+                uri:
+                  `https://www.artic.edu/iiif/2/` +
+                  detailArt.image_id +
+                  `/full/843,/0/default.jpg`,
+              }}></Image>
+          </View>
+        )}
         <View style={styles.panel}>
           <TouchableOpacity
             onPress={() => {
+              setLiked(isLiked => !isLiked);
               dispatch(saveArt(detailArt));
             }}>
-            <MaterialIcons name="favorite-border" size={30} color="#000" />
+            <MaterialIcons
+              name={liked ? 'favorite' : 'favorite-border'}
+              size={30}
+              color={liked ? '#F00' : '#000'}
+            />
           </TouchableOpacity>
           <View style={styles.credit}>
             <Text>Credit : {detailArt.credit_line}</Text>
@@ -138,8 +150,8 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   credit: {
-    width: width * 0.5,
-    marginLeft: width * 0.35,
+    width: width * 0.8,
+    marginLeft: width * 0.1,
     paddingHorizontal: 10,
   },
   label: {
