@@ -6,25 +6,49 @@ import {
   Dimensions,
   ScrollView,
   TouchableOpacity,
-  Animated,
 } from 'react-native';
+import {useSharedValue, withSpring} from 'react-native-reanimated';
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {clearSelected, getDetail, saveArt} from '../redux/actions/artAction';
+import {
+  clearSelected,
+  getDetail,
+  removeArt,
+  saveArt,
+} from '../redux/actions/artAction';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import LikeButton from '../components/LikeButton';
 
 const {width, height} = Dimensions.get('window');
 
 const Detail = navigation => {
   const dispatch = useDispatch();
+  const likeIndicator = useSharedValue(0);
   const {id} = navigation.route.params;
-  const [liked, setLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
   const detailArt = useSelector(state => state.artReducer.detailArt);
+  const savedArt = useSelector(state => state.artReducer.savedArt);
+
+  const likeHandler = () => {
+    dispatch(saveArt(detailArt));
+    likeIndicator.value = withSpring(likeIndicator.value ? 0 : 1);
+    setIsLiked(isLiked => !isLiked);
+  };
+
+  const dislikeHandler = () => {
+    dispatch(removeArt(detailArt));
+    likeIndicator.value = withSpring(likeIndicator.value ? 0 : 1);
+    setIsLiked(isLiked => !isLiked);
+  };
 
   useEffect(() => {
     dispatch(getDetail(id));
+    savedArt.filter(item => {
+      if (item.id == id) {
+        setIsLiked(true);
+      }
+    });
   }, []);
-  console.log(detailArt);
   return (
     <View style={styles.container}>
       {detailArt.title !== null && (
@@ -53,17 +77,11 @@ const Detail = navigation => {
           </View>
         )}
         <View style={styles.panel}>
-          <TouchableOpacity
-            onPress={() => {
-              setLiked(isLiked => !isLiked);
-              dispatch(saveArt(detailArt));
-            }}>
-            <MaterialIcons
-              name={liked ? 'favorite' : 'favorite-border'}
-              size={30}
-              color={liked ? '#F00' : '#000'}
-            />
-          </TouchableOpacity>
+          <LikeButton
+            onPress={isLiked ? dislikeHandler : likeHandler}
+            isLiked={isLiked}
+            likeIndicator={likeIndicator}
+          />
           <View style={styles.credit}>
             <Text>Credit : {detailArt.credit_line}</Text>
           </View>

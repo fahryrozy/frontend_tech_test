@@ -43,12 +43,12 @@ const Saved = () => {
                 <Text style={styles.title}>{item.title}</Text>
               </View>
               <View style={styles.action}>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   onPress={() => {
                     dispatch(saveArt(item));
                   }}>
                   <MaterialIcons name="favorite" size={30} color="#900" />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 <TouchableOpacity
                   onPress={() => {
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
   },
   content: {
     paddingHorizontal: width * 0.05,
@@ -115,6 +115,5 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 18,
     fontWeight: '700',
-    // paddingVertical: 1,
   },
 });

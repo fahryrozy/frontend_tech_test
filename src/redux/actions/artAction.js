@@ -77,7 +77,6 @@ export const clearSelected = () => {
 
 export const saveArt = art => {
   return async dispatch => {
-    console.log('Art => ', art);
     dispatch({
       type: 'SAVE_ART',
       payload: art,

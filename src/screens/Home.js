@@ -35,7 +35,7 @@ const Home = ({navigation}) => {
           <SearchBar isEnabled={false} />
         </View>
       </TouchableWithoutFeedback>
-      <View style={{flex: 9}}>
+      <View style={{flex: 7}}>
         <MainContent
           navigation={navigation}
           data={arts}
