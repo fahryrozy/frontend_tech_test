@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   inputStyle: {
     top: 10,
     width: width * 0.965,
-    height: 45,
+    height: height * 0.065,
     borderRadius: 20,
     flexDirection: 'row',
     alignItems: 'center',

@@ -24,37 +24,28 @@ const Saved = () => {
         data={savedArt}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item}) => (
-          <>
+          <View style={styles.photoContainer}>
             {Object.keys(item).length > 0 &&
               Object.keys(item.image_id).length > 0 && (
-                <View style={styles.photoContainer}>
-                  <Image
-                    style={styles.thumbnail}
-                    source={{
-                      uri:
-                        `https://www.artic.edu/iiif/2/` +
-                        item.image_id +
-                        `/full/843,/0/default.jpg`,
-                    }}></Image>
-                </View>
+                <Image
+                  style={styles.thumbnail}
+                  source={{
+                    uri:
+                      `https://www.artic.edu/iiif/2/` +
+                      item.image_id +
+                      `/full/843,/0/default.jpg`,
+                  }}></Image>
               )}
             <View style={styles.panel}>
               <View style={styles.header}>
                 <Text style={styles.title}>{item.title}</Text>
               </View>
               <View style={styles.action}>
-                {/* <TouchableOpacity
-                  onPress={() => {
-                    dispatch(saveArt(item));
-                  }}>
-                  <MaterialIcons name="favorite" size={30} color="#900" />
-                </TouchableOpacity> */}
-
                 <TouchableOpacity
                   onPress={() => {
                     dispatch(removeArt(item));
                   }}>
-                  <FontAwesome name="trash" size={30} color="#900" />
+                  <FontAwesome name="trash" size={25} color="#900" />
                 </TouchableOpacity>
               </View>
             </View>
@@ -67,7 +58,7 @@ const Saved = () => {
                   : 'There is no description here'}
               </Text>
             </View>
-          </>
+          </View>
         )}
         style={styles.content}
       />
@@ -96,12 +87,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
-  content: {
+  content: {},
+  photoContainer: {
+    paddingVertical: 20,
+    backgroundColor: '#EEE',
+    marginVertical: 5,
     paddingHorizontal: width * 0.05,
+    width: width * 0.95,
+    alignItems: 'center',
+    borderRadius: width * 0.025,
   },
   thumbnail: {
-    width: width * 0.9,
-    height: width * 0.9,
+    width: width * 0.85,
+    height: width * 0.85,
   },
   panel: {
     flexDirection: 'row',
@@ -110,7 +108,7 @@ const styles = StyleSheet.create({
   },
   description: {
     paddingVertical: 1,
-    marginBottom: 50,
+    width: '100%',
   },
   label: {
     fontSize: 18,
