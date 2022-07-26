@@ -39,6 +39,40 @@ export const getAll = page => {
   };
 };
 
+export const reloadData = page => {
+  return async dispatch => {
+    dispatch({
+      type: 'RELOAD_ART_REQUEST',
+    });
+
+    try {
+      const result = await getData(page);
+      if (result.status === 200) {
+        dispatch({
+          type: 'RELOAD_ART_SUCCESS',
+          payload: {
+            pagination: result.data.pagination,
+            data: result.data.data.map(item => ({
+              id: item.id,
+              image_id: item.image_id,
+            })),
+          },
+        });
+      } else {
+        dispatch({
+          type: 'RELOAD_ART_FAILED',
+          error: result,
+        });
+      }
+    } catch (err) {
+      dispatch({
+        type: 'RELOAD_ART_FAILED',
+        error: err,
+      });
+    }
+  };
+};
+
 export const getDetail = id => {
   return async dispatch => {
     dispatch({

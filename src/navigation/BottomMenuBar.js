@@ -13,6 +13,7 @@ const BottomMenuBar = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        keyboardHidesTabBar: true,
         tabBarStyle: {
           height: 50,
           position: 'absolute',

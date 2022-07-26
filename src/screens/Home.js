@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import SearchBar from '../components/SearchBar';
 import MainContent from '../components/MainContent';
 import {useSelector, useDispatch} from 'react-redux';
-import {getAll} from '../redux/actions/artAction';
+import {getAll, reloadData} from '../redux/actions/artAction';
 
 const Home = ({navigation}) => {
   const [refreshing, setRefreshing] = React.useState(false);
@@ -19,11 +19,13 @@ const Home = ({navigation}) => {
 
   useEffect(() => {
     dispatch(getAll(page));
+    console.log('Fetching Data');
   }, [page]);
 
   const onRefresh = () => {
     setRefreshing(true);
-    dispatch(getAll(page));
+    dispatch(reloadData(page));
+    console.log('reloading');
     if (!isLoading) {
       setRefreshing(false);
     }
@@ -32,6 +34,7 @@ const Home = ({navigation}) => {
   const fetchMoreArts = () => {
     if (pagination.current_page < pagination.total_pages) {
       setPage(page + 1);
+      console.log('Page => ', page);
     }
   };
 

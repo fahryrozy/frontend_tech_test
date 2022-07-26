@@ -4,50 +4,54 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 const {width, height} = Dimensions.get('window');
 
-const MainContentSkeleton = () => {
+const MainContentSkeleton = ({refresh}) => {
+  const Refresh = () => refresh;
   return (
-    <SkeletonPlaceholder>
-      <View
-        style={{
-          flexDirection: 'row',
-        }}>
-        <View style={styles.cardskeleton}></View>
-        <View style={styles.cardskeleton}></View>
-        <View style={styles.cardskeleton}></View>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-        }}>
-        <View style={styles.cardskeleton}></View>
-        <View style={styles.cardskeleton}></View>
-        <View style={styles.cardskeleton}></View>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-        }}>
-        <View style={styles.cardskeleton}></View>
-        <View style={styles.cardskeleton}></View>
-        <View style={styles.cardskeleton}></View>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-        }}>
-        <View style={styles.cardskeleton}></View>
-        <View style={styles.cardskeleton}></View>
-        <View style={styles.cardskeleton}></View>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-        }}>
-        <View style={styles.cardskeleton}></View>
-        <View style={styles.cardskeleton}></View>
-        <View style={styles.cardskeleton}></View>
-      </View>
-    </SkeletonPlaceholder>
+    <>
+      <Refresh />
+      <SkeletonPlaceholder>
+        <View
+          style={{
+            flexDirection: 'row',
+          }}>
+          <View style={styles.cardskeleton}></View>
+          <View style={styles.cardskeleton}></View>
+          <View style={styles.cardskeleton}></View>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+          }}>
+          <View style={styles.cardskeleton}></View>
+          <View style={styles.cardskeleton}></View>
+          <View style={styles.cardskeleton}></View>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+          }}>
+          <View style={styles.cardskeleton}></View>
+          <View style={styles.cardskeleton}></View>
+          <View style={styles.cardskeleton}></View>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+          }}>
+          <View style={styles.cardskeleton}></View>
+          <View style={styles.cardskeleton}></View>
+          <View style={styles.cardskeleton}></View>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+          }}>
+          <View style={styles.cardskeleton}></View>
+          <View style={styles.cardskeleton}></View>
+          <View style={styles.cardskeleton}></View>
+        </View>
+      </SkeletonPlaceholder>
+    </>
   );
 };
 

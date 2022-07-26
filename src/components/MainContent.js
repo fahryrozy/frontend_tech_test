@@ -5,44 +5,45 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
-  RefreshControl,
+  Text,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {memo} from 'react';
 import {useSelector} from 'react-redux';
 import MainContentSkeleton from './MainContentSkeleton';
 
 const {width, height} = Dimensions.get('window');
 
 const MainContent = ({navigation, data, refresh, fetchMore}) => {
-  const isLoading = useSelector(state => state.artReducer.isLoading);
+  const initialLoading = useSelector(state => state.artReducer.initialLoading);
+  const MemoizedValue = memo(({item}) => {
+    return <RenderItem item={item}></RenderItem>;
+  });
+
+  const RenderItem = ({item}) => (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('Detail', {id: `${item.id}`});
+      }}>
+      <Image
+        style={styles.card}
+        source={{
+          uri:
+            `https://www.artic.edu/iiif/2/` +
+            item.image_id +
+            `/full/843,/0/default.jpg`,
+        }}></Image>
+    </TouchableOpacity>
+  );
   return (
     <View style={styles.container}>
-      {isLoading == true ? (
-        <MainContentSkeleton />
+      {initialLoading == true ? (
+        <MainContentSkeleton refresh={refresh} />
       ) : (
         <FlatList
           data={data}
           keyExtractor={(item, index) => index.toString()}
           refreshControl={refresh}
-          renderItem={({item}) => {
-            if (item !== null) {
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate('Detail', {id: `${item.id}`});
-                  }}>
-                  <Image
-                    style={styles.card}
-                    source={{
-                      uri:
-                        `https://www.artic.edu/iiif/2/` +
-                        item.image_id +
-                        `/full/843,/0/default.jpg`,
-                    }}></Image>
-                </TouchableOpacity>
-              );
-            }
-          }}
+          renderItem={({item}) => <MemoizedValue item={item} />}
           numColumns={3}
           onEndReachedThreshold={0.4}
           onEndReached={fetchMore}
