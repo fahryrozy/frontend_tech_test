@@ -19,6 +19,8 @@ import {
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LikeButton from '../components/LikeButton';
 import DetailSkeleton from '../components/DetailSkeleton';
+import ViewMoreText from 'react-native-view-more-text';
+import {renderViewMore, renderViewLess} from '../utils/viewmore';
 
 const {width, height} = Dimensions.get('window');
 
@@ -64,21 +66,27 @@ const Detail = navigation => {
             }}>
             <MaterialIcons name="arrow-back-ios" size={20} color="#000" />
           </TouchableOpacity>
-          <Text style={styles.title}>{detailArt.title}</Text>
+          <Text style={styles.title} numberOfLines={1}>
+            {detailArt.title}
+          </Text>
         </View>
         <ScrollView style={styles.content}>
-          {Object.keys(detailArt).length > 0 && (
-            <View style={styles.photoContainer}>
+          <View style={styles.photoContainer}>
+            {detailArt.image_id !== null ? (
               <Image
                 style={styles.thumbnail}
                 source={{
                   uri:
                     `https://www.artic.edu/iiif/2/` +
-                    detailArt.image_id +
+                    item.image_id +
                     `/full/843,/0/default.jpg`,
                 }}></Image>
-            </View>
-          )}
+            ) : (
+              <Image
+                style={styles.thumbnail}
+                source={require('../assets/images/placeholder-image.jpg')}></Image>
+            )}
+          </View>
           <View style={styles.panel}>
             <LikeButton
               onPress={isLiked ? dislikeHandler : likeHandler}
@@ -86,7 +94,12 @@ const Detail = navigation => {
               likeIndicator={likeIndicator}
             />
             <View style={styles.credit}>
-              <Text>Credit : {detailArt.credit_line}</Text>
+              <ViewMoreText
+                numberOfLines={1}
+                renderViewMore={renderViewMore}
+                renderViewLess={renderViewLess}>
+                <Text>Credit : {detailArt.credit_line}</Text>
+              </ViewMoreText>
             </View>
             <View>
               <Text></Text>
@@ -97,44 +110,64 @@ const Detail = navigation => {
             <Text style={styles.label}>Inscriptions</Text>
           </View>
           <View style={styles.info}>
-            <Text>
-              {detailArt.inscriptions
-                ? detailArt.inscriptions
-                : 'There is no description here'}
-            </Text>
+            <ViewMoreText
+              numberOfLines={3}
+              renderViewMore={renderViewMore}
+              renderViewLess={renderViewLess}>
+              <Text>
+                {detailArt.inscriptions
+                  ? detailArt.inscriptions
+                  : 'There is no description here'}
+              </Text>
+            </ViewMoreText>
           </View>
 
           <View>
             <Text style={styles.label}>Provenance Text</Text>
           </View>
           <View style={styles.info}>
-            <Text>
-              {detailArt.provenance_text
-                ? detailArt.provenance_text
-                : 'There is no description here'}
-            </Text>
+            <ViewMoreText
+              numberOfLines={5}
+              renderViewMore={renderViewMore}
+              renderViewLess={renderViewLess}>
+              <Text>
+                {detailArt.provenance_text
+                  ? detailArt.provenance_text
+                  : 'There is no description here'}
+              </Text>
+            </ViewMoreText>
           </View>
 
           <View>
             <Text style={styles.label}>Publication History</Text>
           </View>
           <View style={styles.info}>
-            <Text>
-              {detailArt.publication_history
-                ? detailArt.publication_history
-                : 'There is no description here'}
-            </Text>
+            <ViewMoreText
+              numberOfLines={3}
+              renderViewMore={renderViewMore}
+              renderViewLess={renderViewLess}>
+              <Text>
+                {detailArt.publication_history
+                  ? detailArt.publication_history
+                  : 'There is no description here'}
+              </Text>
+            </ViewMoreText>
           </View>
 
           <View>
             <Text style={styles.label}>Exhibition History</Text>
           </View>
           <View style={styles.info}>
-            <Text>
-              {detailArt.exhibition_history
-                ? detailArt.exhibition_history
-                : 'There is no description here'}
-            </Text>
+            <ViewMoreText
+              numberOfLines={3}
+              renderViewMore={renderViewMore}
+              renderViewLess={renderViewLess}>
+              <Text>
+                {detailArt.exhibition_history
+                  ? detailArt.exhibition_history
+                  : 'There is no description here'}
+              </Text>
+            </ViewMoreText>
           </View>
         </ScrollView>
       </View>
@@ -158,24 +191,27 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
+    width: '95%',
   },
   content: {
     marginTop: 10,
     paddingHorizontal: width * 0.05,
+  },
+  photoContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   thumbnail: {
     width: width * 0.9,
     height: width * 0.9,
   },
   panel: {
-    flexDirection: 'row',
-    height: 60,
+    flexDirection: 'column',
+    minHeight: height * 0.1,
     paddingVertical: 5,
   },
   credit: {
-    width: width * 0.8,
-    marginLeft: width * 0.1,
-    paddingHorizontal: 10,
+    width: '100%',
   },
   label: {
     fontSize: 18,

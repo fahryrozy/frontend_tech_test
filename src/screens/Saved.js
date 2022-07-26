@@ -13,6 +13,8 @@ import {useSelector, useDispatch} from 'react-redux';
 import {removeArt, getDetail, saveArt} from '../redux/actions/artAction';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import BlankScreen from './BlankScreen';
+import ViewMoreText from 'react-native-view-more-text';
+import {renderViewMore, renderViewLess} from '../utils/viewmore';
 
 const {width, height} = Dimensions.get('window');
 
@@ -30,20 +32,28 @@ const Saved = () => {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item}) => (
             <View style={styles.photoContainer}>
-              {Object.keys(item).length > 0 &&
-                Object.keys(item.image_id).length > 0 && (
-                  <Image
-                    style={styles.thumbnail}
-                    source={{
-                      uri:
-                        `https://www.artic.edu/iiif/2/` +
-                        item.image_id +
-                        `/full/843,/0/default.jpg`,
-                    }}></Image>
-                )}
+              {item.image_id ? (
+                <Image
+                  style={styles.thumbnail}
+                  source={{
+                    uri:
+                      `https://www.artic.edu/iiif/2/` +
+                      item.image_id +
+                      `/full/843,/0/default.jpg`,
+                  }}></Image>
+              ) : (
+                <Image
+                  style={styles.thumbnail}
+                  source={require('../assets/images/placeholder-image.jpg')}></Image>
+              )}
               <View style={styles.panel}>
                 <View style={styles.header}>
-                  <Text style={styles.title}>{item.title}</Text>
+                  <ViewMoreText
+                    numberOfLines={2}
+                    renderViewMore={renderViewMore}
+                    renderViewLess={renderViewLess}>
+                    <Text style={styles.title}>{item.title}</Text>
+                  </ViewMoreText>
                 </View>
                 <View style={styles.action}>
                   <TouchableOpacity
@@ -57,11 +67,16 @@ const Saved = () => {
 
               <View style={styles.description}>
                 <Text style={styles.label}>Inscriptions</Text>
-                <Text>
-                  {item.inscriptions
-                    ? item.inscriptions
-                    : 'There is no description here'}
-                </Text>
+                <ViewMoreText
+                  numberOfLines={3}
+                  renderViewMore={renderViewMore}
+                  renderViewLess={renderViewLess}>
+                  <Text>
+                    {item.inscriptions
+                      ? item.inscriptions
+                      : 'There is no description here'}
+                  </Text>
+                </ViewMoreText>
               </View>
             </View>
           )}
@@ -80,12 +95,12 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    height: 30,
-    alignItems: 'center',
     flex: 4,
+    backgroundColor: '550',
   },
   title: {
     fontSize: 20,
+    height: height * 0.2,
   },
   action: {
     flexDirection: 'row',
@@ -112,7 +127,8 @@ const styles = StyleSheet.create({
   },
   panel: {
     flexDirection: 'row',
-    height: 30,
+    alignItems: 'flex-start',
+    minHeight: height * 0.1,
     paddingVertical: 1,
   },
   description: {

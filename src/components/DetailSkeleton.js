@@ -6,7 +6,7 @@ const {width, height} = Dimensions.get('window');
 
 const DetailSkeleton = () => {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <SkeletonPlaceholder>
         <View style={styles.header}></View>
       </SkeletonPlaceholder>
@@ -16,9 +16,9 @@ const DetailSkeleton = () => {
         </SkeletonPlaceholder>
         <View style={styles.panel}>
           <MaterialIcons name={'favorite-border'} size={30} color={'#000'} />
-          <View style={styles.credit}>
-            <Text>Credit : </Text>
-          </View>
+          <SkeletonPlaceholder>
+            <View style={styles.credit}></View>
+          </SkeletonPlaceholder>
           <View>
             <Text></Text>
           </View>
@@ -52,7 +52,7 @@ const DetailSkeleton = () => {
           <View style={styles.infoSkeleton}></View>
         </SkeletonPlaceholder>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -78,14 +78,12 @@ const styles = StyleSheet.create({
     height: width * 0.9,
   },
   panel: {
-    flexDirection: 'row',
-    height: 60,
+    minHeight: height * 0.1,
     paddingVertical: 5,
   },
   credit: {
-    width: width * 0.7,
-    marginLeft: width * 0.1,
-    paddingHorizontal: 10,
+    width: '100%',
+    height: height * 0.035,
   },
   label: {
     fontSize: 18,
