@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
-  Text,
+  RefreshControl,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
@@ -13,7 +13,7 @@ import MainContentSkeleton from './MainContentSkeleton';
 
 const {width, height} = Dimensions.get('window');
 
-const MainContent = ({navigation, data, fetchMore}) => {
+const MainContent = ({navigation, data, refresh, fetchMore}) => {
   const isLoading = useSelector(state => state.artReducer.isLoading);
   return (
     <View style={styles.container}>
@@ -23,6 +23,7 @@ const MainContent = ({navigation, data, fetchMore}) => {
         <FlatList
           data={data}
           keyExtractor={(item, index) => index.toString()}
+          refreshControl={refresh}
           renderItem={({item}) => {
             if (item !== null) {
               return (

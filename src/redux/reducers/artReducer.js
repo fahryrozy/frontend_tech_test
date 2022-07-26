@@ -21,7 +21,10 @@ export default (state = defaultState, action = {}) => {
         ...state,
         isLoading: false,
         pagination: action.payload.pagination,
-        arts: [...state.arts, ...action.payload.data],
+        arts: [
+          state.savedArt.filter(art => art.id !== action.payload.data.id),
+          ...state.arts,
+        ],
       };
     }
     case 'GET_ART_FAIL': {

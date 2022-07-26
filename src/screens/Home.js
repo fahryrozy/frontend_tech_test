@@ -1,4 +1,4 @@
-import {View, TouchableWithoutFeedback, Text} from 'react-native';
+import {View, TouchableWithoutFeedback, RefreshControl} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import SearchBar from '../components/SearchBar';
 import MainContent from '../components/MainContent';
@@ -6,15 +6,28 @@ import {useSelector, useDispatch} from 'react-redux';
 import {getAll} from '../redux/actions/artAction';
 
 const Home = ({navigation}) => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const arts = useSelector(state => state.artReducer.arts);
+  const isLoading = useSelector(state => state.artReducer.isLoading);
   const pagination = useSelector(state => state.artReducer.pagination);
   const [page, setPage] = useState(1);
 
+  const refreshHandler = () => (
+    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAll(page));
   }, [page]);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    dispatch(getAll(page));
+    if (!isLoading) {
+      setRefreshing(false);
+    }
+  };
 
   const fetchMoreArts = () => {
     if (pagination.current_page < pagination.total_pages) {
@@ -36,6 +49,9 @@ const Home = ({navigation}) => {
         <MainContent
           navigation={navigation}
           data={arts}
+          refresh={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           fetchMore={fetchMoreArts}
         />
       </View>
