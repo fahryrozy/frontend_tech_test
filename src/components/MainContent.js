@@ -5,16 +5,13 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
-  RefreshControl,
   ActivityIndicator,
-  Text,
   ScrollView,
 } from 'react-native';
 import React, {memo} from 'react';
 import {useSelector} from 'react-redux';
 import MainContentSkeleton from './MainContentSkeleton';
 import BlankScreen from '../screens/BlankScreen';
-import LottieView from 'lottie-react-native';
 
 const {width, height} = Dimensions.get('window');
 
