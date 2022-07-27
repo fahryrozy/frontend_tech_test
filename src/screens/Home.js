@@ -77,6 +77,8 @@ const Home = ({navigation}) => {
           refresh={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
+          refreshing={refreshing}
+          onRefresh={onRefresh}
           fetchMore={fetchMoreArts}
         />
       </View>

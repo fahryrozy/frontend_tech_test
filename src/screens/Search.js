@@ -36,7 +36,6 @@ const Search = ({navigation}) => {
             }}
             onPress={() => {
               dispatch(clearKeyword());
-              console.log('Ini clearing');
             }}>
             <Text style={styles.label}>Clear history</Text>
           </TouchableOpacity>
@@ -62,7 +61,6 @@ const Search = ({navigation}) => {
           data={searchedKeyword}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item, index}) => {
-            console.log('Index => ', index);
             if (index < 10) {
               return (
                 <View style={styles.keywordPanel}>

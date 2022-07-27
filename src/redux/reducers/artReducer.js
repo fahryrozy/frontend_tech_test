@@ -109,7 +109,6 @@ export default (state = defaultState, action = {}) => {
       if (!state.searchedKeyword.includes(action.payload.query.toLowerCase())) {
         state.searchedKeyword.unshift(action.payload.query.toLowerCase());
       } else {
-        console.log('Ada');
         state.searchedKeyword = state.searchedKeyword.filter(
           e => e != action.payload.query.toLowerCase(),
         );

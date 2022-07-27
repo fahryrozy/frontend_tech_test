@@ -135,7 +135,6 @@ export const searchData = query => {
 
     try {
       const result = await searchDataArt(query);
-      console.log('Result => ', result.status);
       if (result.status === 200) {
         dispatch({
           type: 'SEARCH_DATA_ART_SUCCESS',
@@ -164,7 +163,6 @@ export const searchData = query => {
 };
 
 export const removeKeyword = keyword => {
-  console.log('Remove keyword');
   return async dispatch => {
     dispatch({
       type: 'REMOVE_KEYWORD',

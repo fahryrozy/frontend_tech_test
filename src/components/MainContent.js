@@ -5,13 +5,16 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
-  Text,
+  RefreshControl,
   ActivityIndicator,
+  Text,
+  ScrollView,
 } from 'react-native';
 import React, {memo} from 'react';
 import {useSelector} from 'react-redux';
 import MainContentSkeleton from './MainContentSkeleton';
 import BlankScreen from '../screens/BlankScreen';
+import LottieView from 'lottie-react-native';
 
 const {width, height} = Dimensions.get('window');
 
@@ -53,7 +56,13 @@ const MainContent = ({navigation, data, refresh, fetchMore}) => {
   };
 
   if (data.length <= 0 && !initialLoading && !isLoading) {
-    return <BlankScreen />;
+    return (
+      <ScrollView
+        refreshControl={refresh}
+        style={{flex: 1, backgroundColor: '#fff'}}>
+        <BlankScreen style={{width: width, height: height}} />
+      </ScrollView>
+    );
   } else {
     return (
       <View style={styles.container}>
