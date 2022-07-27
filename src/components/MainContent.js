@@ -27,14 +27,20 @@ const MainContent = ({navigation, data, refresh, fetchMore}) => {
       onPress={() => {
         navigation.navigate('Detail', {id: `${item.id}`});
       }}>
-      <Image
-        style={styles.card}
-        source={{
-          uri:
-            `https://www.artic.edu/iiif/2/` +
-            item.image_id +
-            `/full/843,/0/default.jpg`,
-        }}></Image>
+      {item.image_id ? (
+        <Image
+          style={styles.card}
+          source={{
+            uri:
+              `https://www.artic.edu/iiif/2/` +
+              item.image_id +
+              `/full/843,/0/default.jpg`,
+          }}></Image>
+      ) : (
+        <Image
+          style={styles.card}
+          source={require('../assets/images/placeholder-image.jpg')}></Image>
+      )}
     </TouchableOpacity>
   );
 
@@ -46,7 +52,7 @@ const MainContent = ({navigation, data, refresh, fetchMore}) => {
     ) : null;
   };
 
-  if (data.length <= 0) {
+  if (data.length <= 0 && !initialLoading && !isLoading) {
     return <BlankScreen />;
   } else {
     return (

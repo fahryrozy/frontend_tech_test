@@ -1,4 +1,10 @@
-import {View, TouchableWithoutFeedback, RefreshControl} from 'react-native';
+import {
+  View,
+  TouchableWithoutFeedback,
+  RefreshControl,
+  BackHandler,
+  Alert,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import SearchBar from '../components/SearchBar';
 import MainContent from '../components/MainContent';
@@ -12,6 +18,29 @@ const Home = ({navigation}) => {
   const pagination = useSelector(state => state.artReducer.pagination);
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
+
+  const backAction = () => {
+    if (!navigation.canGoBack()) {
+      Alert.alert('Hold on!', 'Are you sure you want to go back?', [
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {text: 'YES', onPress: () => BackHandler.exitApp()},
+      ]);
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   useEffect(() => {
     dispatch(getAll(page));
