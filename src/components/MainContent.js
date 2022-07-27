@@ -6,6 +6,7 @@ import {
   Image,
   FlatList,
   Text,
+  ActivityIndicator,
 } from 'react-native';
 import React, {memo} from 'react';
 import {useSelector} from 'react-redux';
@@ -15,6 +16,7 @@ const {width, height} = Dimensions.get('window');
 
 const MainContent = ({navigation, data, refresh, fetchMore}) => {
   const initialLoading = useSelector(state => state.artReducer.initialLoading);
+  const isLoading = useSelector(state => state.artReducer.isLoading);
   const MemoizedValue = memo(({item}) => {
     return <RenderItem item={item}></RenderItem>;
   });
@@ -34,6 +36,15 @@ const MainContent = ({navigation, data, refresh, fetchMore}) => {
         }}></Image>
     </TouchableOpacity>
   );
+
+  const renderLoader = () => {
+    return isLoading ? (
+      <View style={styles.loaderStyle}>
+        <ActivityIndicator size="large" color="#aaa" />
+      </View>
+    ) : null;
+  };
+
   return (
     <View style={styles.container}>
       {initialLoading == true ? (
@@ -47,6 +58,7 @@ const MainContent = ({navigation, data, refresh, fetchMore}) => {
           numColumns={3}
           onEndReachedThreshold={0.4}
           onEndReached={fetchMore}
+          ListFooterComponent={renderLoader}
         />
       )}
     </View>

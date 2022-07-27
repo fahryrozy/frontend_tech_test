@@ -8,8 +8,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import React from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {useSelector, useDispatch} from 'react-redux';
-import {clearSelected, saveArt} from '../redux/actions/artAction';
 
 const LikeButton = ({onPress, likeIndicator, isLiked, data}) => {
   const outlineStyle = useAnimatedStyle(() => {
@@ -39,7 +37,7 @@ const LikeButton = ({onPress, likeIndicator, isLiked, data}) => {
   });
   return (
     <TouchableOpacity onPress={onPress}>
-      <Animated.View style={fillStyle}>
+      <Animated.View style={[fillStyle, styles.button]}>
         <MaterialIcons
           name={isLiked ? 'favorite' : 'favorite-border'}
           size={32}
@@ -47,7 +45,8 @@ const LikeButton = ({onPress, likeIndicator, isLiked, data}) => {
         />
       </Animated.View>
 
-      <Animated.View style={[StyleSheet.absoluteFillObject, outlineStyle]}>
+      <Animated.View
+        style={[StyleSheet.absoluteFillObject, outlineStyle, styles.button]}>
         <MaterialIcons
           name={isLiked ? 'favorite' : 'favorite-border'}
           size={30}
@@ -60,4 +59,8 @@ const LikeButton = ({onPress, likeIndicator, isLiked, data}) => {
 
 export default LikeButton;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  button: {
+    width: 40,
+  },
+});

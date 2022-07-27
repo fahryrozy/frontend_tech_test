@@ -8,9 +8,9 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {removeArt, getDetail, saveArt} from '../redux/actions/artAction';
+import {removeArt} from '../redux/actions/artAction';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import BlankScreen from './BlankScreen';
 import ViewMoreText from 'react-native-view-more-text';
@@ -18,7 +18,7 @@ import {renderViewMore, renderViewLess} from '../utils/viewmore';
 
 const {width, height} = Dimensions.get('window');
 
-const Saved = () => {
+const Saved = ({navigation}) => {
   const dispatch = useDispatch();
   const savedArt = useSelector(state => state.artReducer.savedArt);
 
@@ -31,54 +31,59 @@ const Saved = () => {
           data={savedArt}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item}) => (
-            <View style={styles.photoContainer}>
-              {item.image_id ? (
-                <Image
-                  style={styles.thumbnail}
-                  source={{
-                    uri:
-                      `https://www.artic.edu/iiif/2/` +
-                      item.image_id +
-                      `/full/843,/0/default.jpg`,
-                  }}></Image>
-              ) : (
-                <Image
-                  style={styles.thumbnail}
-                  source={require('../assets/images/placeholder-image.jpg')}></Image>
-              )}
-              <View style={styles.panel}>
-                <View style={styles.header}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Detail', {id: `${item.id}`});
+              }}>
+              <View style={styles.photoContainer}>
+                {item.image_id ? (
+                  <Image
+                    style={styles.thumbnail}
+                    source={{
+                      uri:
+                        `https://www.artic.edu/iiif/2/` +
+                        item.image_id +
+                        `/full/843,/0/default.jpg`,
+                    }}></Image>
+                ) : (
+                  <Image
+                    style={styles.thumbnail}
+                    source={require('../assets/images/placeholder-image.jpg')}></Image>
+                )}
+                <View style={styles.panel}>
+                  <View style={styles.header}>
+                    <ViewMoreText
+                      numberOfLines={2}
+                      renderViewMore={renderViewMore}
+                      renderViewLess={renderViewLess}>
+                      <Text style={styles.title}>{item.title}</Text>
+                    </ViewMoreText>
+                  </View>
+                  <View style={styles.action}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        dispatch(removeArt(item));
+                      }}>
+                      <FontAwesome name="trash" size={25} color="#900" />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                <View style={styles.description}>
+                  <Text style={styles.label}>Inscriptions</Text>
                   <ViewMoreText
-                    numberOfLines={2}
+                    numberOfLines={3}
                     renderViewMore={renderViewMore}
                     renderViewLess={renderViewLess}>
-                    <Text style={styles.title}>{item.title}</Text>
+                    <Text>
+                      {item.inscriptions
+                        ? item.inscriptions
+                        : 'There is no description here'}
+                    </Text>
                   </ViewMoreText>
                 </View>
-                <View style={styles.action}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      dispatch(removeArt(item));
-                    }}>
-                    <FontAwesome name="trash" size={25} color="#900" />
-                  </TouchableOpacity>
-                </View>
               </View>
-
-              <View style={styles.description}>
-                <Text style={styles.label}>Inscriptions</Text>
-                <ViewMoreText
-                  numberOfLines={3}
-                  renderViewMore={renderViewMore}
-                  renderViewLess={renderViewLess}>
-                  <Text>
-                    {item.inscriptions
-                      ? item.inscriptions
-                      : 'There is no description here'}
-                  </Text>
-                </ViewMoreText>
-              </View>
-            </View>
+            </TouchableOpacity>
           )}
           style={styles.content}
         />

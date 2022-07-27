@@ -16,7 +16,6 @@ const BottomMenuBar = () => {
         keyboardHidesTabBar: true,
         tabBarStyle: {
           height: 50,
-          position: 'absolute',
           bottom: 0,
           right: 0,
           left: 0,

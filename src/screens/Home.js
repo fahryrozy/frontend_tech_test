@@ -11,21 +11,15 @@ const Home = ({navigation}) => {
   const isLoading = useSelector(state => state.artReducer.isLoading);
   const pagination = useSelector(state => state.artReducer.pagination);
   const [page, setPage] = useState(1);
-
-  const refreshHandler = () => (
-    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-  );
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAll(page));
-    console.log('Fetching Data');
   }, [page]);
 
   const onRefresh = () => {
     setRefreshing(true);
     dispatch(reloadData(page));
-    console.log('reloading');
     if (!isLoading) {
       setRefreshing(false);
     }
@@ -34,7 +28,6 @@ const Home = ({navigation}) => {
   const fetchMoreArts = () => {
     if (pagination.current_page < pagination.total_pages) {
       setPage(page + 1);
-      console.log('Page => ', page);
     }
   };
 
