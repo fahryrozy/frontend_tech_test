@@ -11,6 +11,7 @@ import {
 import React, {memo} from 'react';
 import {useSelector} from 'react-redux';
 import MainContentSkeleton from './MainContentSkeleton';
+import BlankScreen from '../screens/BlankScreen';
 
 const {width, height} = Dimensions.get('window');
 
@@ -45,24 +46,28 @@ const MainContent = ({navigation, data, refresh, fetchMore}) => {
     ) : null;
   };
 
-  return (
-    <View style={styles.container}>
-      {initialLoading == true ? (
-        <MainContentSkeleton refresh={refresh} />
-      ) : (
-        <FlatList
-          data={data}
-          keyExtractor={(item, index) => index.toString()}
-          refreshControl={refresh}
-          renderItem={({item}) => <MemoizedValue item={item} />}
-          numColumns={3}
-          onEndReachedThreshold={0.4}
-          onEndReached={fetchMore}
-          ListFooterComponent={renderLoader}
-        />
-      )}
-    </View>
-  );
+  if (data.length <= 0) {
+    return <BlankScreen />;
+  } else {
+    return (
+      <View style={styles.container}>
+        {initialLoading == true ? (
+          <MainContentSkeleton refresh={refresh} />
+        ) : (
+          <FlatList
+            data={data}
+            keyExtractor={(item, index) => index.toString()}
+            refreshControl={refresh}
+            renderItem={({item}) => <MemoizedValue item={item} />}
+            numColumns={3}
+            onEndReachedThreshold={0.4}
+            onEndReached={fetchMore}
+            ListFooterComponent={renderLoader}
+          />
+        )}
+      </View>
+    );
+  }
 };
 
 export default MainContent;

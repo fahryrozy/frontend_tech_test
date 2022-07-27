@@ -4,7 +4,7 @@ const defaultState = {
   detailArt: {},
   savedArt: [],
   isSearch: false,
-  searchedData: {},
+  searchedKeyword: [],
   isLoading: false,
   initialLoading: true,
 };
@@ -18,10 +18,6 @@ export default (state = defaultState, action = {}) => {
       };
     }
     case 'GET_ART_SUCCESS': {
-      // const test = action.payload.data.filter(item => {
-      //   return !this.has(item);
-      // }, new Set(state.arts));
-      // console.log('Data -> ', test);
       const intersection = action.payload.data.filter(
         payload => !state.arts.some(base => payload.id === base.id),
       );
@@ -102,11 +98,52 @@ export default (state = defaultState, action = {}) => {
       };
     }
 
-    case 'SEARCH_DATA_ART_SUCCESS': {
+    case 'SEARCH_DATA_ART_REQUEST': {
       return {
         ...state,
+        isLoading: true,
+        initialLoading: true,
+      };
+    }
+    case 'SEARCH_DATA_ART_SUCCESS': {
+      if (!state.searchedKeyword.includes(action.payload.query.toLowerCase())) {
+        state.searchedKeyword.unshift(action.payload.query.toLowerCase());
+      } else {
+        console.log('Ada');
+        state.searchedKeyword = state.searchedKeyword.filter(
+          e => e != action.payload.query.toLowerCase(),
+        );
+        state.searchedKeyword.unshift(action.payload.query.toLowerCase());
+      }
+      return {
+        ...state,
+        isLoading: false,
+        initialLoading: false,
         pagination: action.payload.pagination,
         arts: action.payload.data,
+      };
+    }
+    case 'SEARCH_DATA_ART_REQUEST': {
+      return {
+        ...state,
+        isLoading: false,
+        initialLoading: false,
+      };
+    }
+
+    case 'REMOVE_KEYWORD': {
+      state.searchedKeyword = state.searchedKeyword.filter(
+        e => e != action.payload.toLowerCase(),
+      );
+      return {
+        ...state,
+      };
+    }
+
+    case 'CLEAR_KEYWORD': {
+      return {
+        ...state,
+        searchedKeyword: [],
       };
     }
 
