@@ -30,7 +30,7 @@ const Detail = navigation => {
   const likeIndicator = useSharedValue(0);
   const { id } = navigation.route.params;
   const [isLiked, setIsLiked] = useState(false);
-  const { detailArt, isLoading, savedArt } = useSelector(state => state.artReducer.detailArt);
+  const { detailArt, isLoading, savedArt } = useSelector(state => state.artReducer);
 
   const likeHandler = () => {
     dispatch(saveArt(detailArt));

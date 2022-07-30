@@ -22,12 +22,14 @@ const MainContent = ({ navigation, data, refresh, fetchMore }) => {
   const MemoizedValue = memo(({ item }) => {
     return <RenderItem item={item} />;
   });
+  const handleNavigation = (item) => {
+    navigation.navigate('Detail', { id: `${item.id}` });
+  };
 
   const RenderItem = ({ item }) => (
     <TouchableOpacity
-      onPress={() => {
-        navigation.navigate('Detail', { id: `${item.id}` });
-      }}>
+      testID="navigateToDetail"
+      onPress={handleNavigation}>
       {item.image_id ? (
         <Image
           style={styles.card}

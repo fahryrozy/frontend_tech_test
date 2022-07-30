@@ -34,9 +34,10 @@ const LikeButton = ({ onPress, likeIndicator, isLiked }) => {
     };
   });
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity testID="likeButton" onPress={onPress}>
       <Animated.View style={[fillStyle, styles.button]}>
         <MaterialIcons
+          testID="likeIcon"
           name={isLiked ? 'favorite' : 'favorite-border'}
           size={32}
           color={isLiked ? '#F00' : '#000'}
@@ -46,6 +47,7 @@ const LikeButton = ({ onPress, likeIndicator, isLiked }) => {
       <Animated.View
         style={[StyleSheet.absoluteFillObject, outlineStyle, styles.button]}>
         <MaterialIcons
+          testID="likeIcon"
           name={isLiked ? 'favorite' : 'favorite-border'}
           size={30}
           color={isLiked ? '#F00' : '#000'}
