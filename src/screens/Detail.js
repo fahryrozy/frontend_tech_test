@@ -79,7 +79,8 @@ const Detail = navigation => {
                   uri:
                     'https://www.artic.edu/iiif/2/' +
                     detailArt.image_id +
-                    '/full/843,/0/default.jpg'
+                    '/full/843,/0/default.jpg',
+                  cache: 'only-if-cached'
                 }}
               />
             ) : (
