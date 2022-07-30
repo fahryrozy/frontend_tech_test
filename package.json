@@ -61,18 +61,7 @@
   "jest": {
     "preset": "react-native",
     "transformIgnorePatterns": [
-      "node_modules/(?!(react-native|react-native-vector-icons)/)"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ],
-    "transform": {
-      "\\.[jt]sx?$": "babel-jest"
-    }
+      "node_modules/(?!(jest-)?@?react-native|@react-native-community|@react-navigation/(.*))"
+    ]
   }
 }
