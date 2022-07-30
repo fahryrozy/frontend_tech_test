@@ -1,9 +1,9 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 
 import artReducer from './artReducer';
 
 const reducers = {
-  artReducer: artReducer,
+  artReducer: artReducer
 };
 
 const rootReducer = combineReducers(reducers);

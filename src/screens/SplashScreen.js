@@ -1,10 +1,10 @@
-import {StyleSheet, View} from 'react-native';
+import { View } from 'react-native';
 import React from 'react';
 import LottieView from 'lottie-react-native';
 
 const SplashScreen = () => {
   return (
-    <View style={{flex: 1, backgroundColor: '#FFF'}}>
+    <View style={{ flex: 1, backgroundColor: '#FFF' }}>
       <LottieView
         source={require('../assets/lotties/55229-artispic.json')}
         autoPlay
@@ -15,5 +15,3 @@ const SplashScreen = () => {
 };
 
 export default SplashScreen;
-
-const styles = StyleSheet.create({});

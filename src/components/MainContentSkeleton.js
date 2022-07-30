@@ -1,54 +1,44 @@
-import {StyleSheet, Dimensions, View} from 'react-native';
+import { StyleSheet, Dimensions, View } from 'react-native';
 import React from 'react';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-const {width, height} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
-const MainContentSkeleton = ({refresh}) => {
+const MainContentSkeleton = ({ refresh }) => {
   const Refresh = () => refresh;
   return (
     <>
       <Refresh />
       <SkeletonPlaceholder>
         <View
-          style={{
-            flexDirection: 'row',
-          }}>
-          <View style={styles.cardskeleton}></View>
-          <View style={styles.cardskeleton}></View>
-          <View style={styles.cardskeleton}></View>
+          style={styles.row}>
+          <View style={styles.cardskeleton} />
+          <View style={styles.cardskeleton} />
+          <View style={styles.cardskeleton} />
         </View>
         <View
-          style={{
-            flexDirection: 'row',
-          }}>
-          <View style={styles.cardskeleton}></View>
-          <View style={styles.cardskeleton}></View>
-          <View style={styles.cardskeleton}></View>
+          style={styles.row}>
+          <View style={styles.cardskeleton} />
+          <View style={styles.cardskeleton} />
+          <View style={styles.cardskeleton} />
         </View>
         <View
-          style={{
-            flexDirection: 'row',
-          }}>
-          <View style={styles.cardskeleton}></View>
-          <View style={styles.cardskeleton}></View>
-          <View style={styles.cardskeleton}></View>
+          style={styles.row}>
+          <View style={styles.cardskeleton} />
+          <View style={styles.cardskeleton} />
+          <View style={styles.cardskeleton} />
         </View>
         <View
-          style={{
-            flexDirection: 'row',
-          }}>
-          <View style={styles.cardskeleton}></View>
-          <View style={styles.cardskeleton}></View>
-          <View style={styles.cardskeleton}></View>
+          style={styles.row}>
+          <View style={styles.cardskeleton} />
+          <View style={styles.cardskeleton} />
+          <View style={styles.cardskeleton} />
         </View>
         <View
-          style={{
-            flexDirection: 'row',
-          }}>
-          <View style={styles.cardskeleton}></View>
-          <View style={styles.cardskeleton}></View>
-          <View style={styles.cardskeleton}></View>
+          style={styles.row}>
+          <View style={styles.cardskeleton} />
+          <View style={styles.cardskeleton} />
+          <View style={styles.cardskeleton} />
         </View>
       </SkeletonPlaceholder>
     </>
@@ -64,6 +54,9 @@ const styles = StyleSheet.create({
     height: width * 0.327,
     marginHorizontal: width * 0.003,
     marginBottom: width * 0.006,
-    resizeMode: 'cover',
+    resizeMode: 'cover'
   },
+  row: {
+    flexDirection: 'row'
+  }
 });

@@ -6,40 +6,41 @@ import {
   Image,
   FlatList,
   ActivityIndicator,
-  ScrollView,
+  ScrollView
 } from 'react-native';
-import React, {memo} from 'react';
-import {useSelector} from 'react-redux';
-import MainContentSkeleton from './MainContentSkeleton';
+import React, { memo } from 'react';
+import { useSelector } from 'react-redux';
+
 import BlankScreen from '../screens/BlankScreen';
 
-const {width, height} = Dimensions.get('window');
+import MainContentSkeleton from './MainContentSkeleton';
 
-const MainContent = ({navigation, data, refresh, fetchMore}) => {
-  const initialLoading = useSelector(state => state.artReducer.initialLoading);
-  const isLoading = useSelector(state => state.artReducer.isLoading);
-  const MemoizedValue = memo(({item}) => {
-    return <RenderItem item={item}></RenderItem>;
+const { width, height } = Dimensions.get('window');
+
+const MainContent = ({ navigation, data, refresh, fetchMore }) => {
+  const { initialLoading, isLoading } = useSelector(state => state.artReducer);
+  const MemoizedValue = memo(({ item }) => {
+    return <RenderItem item={item} />;
   });
 
-  const RenderItem = ({item}) => (
+  const RenderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate('Detail', {id: `${item.id}`});
+        navigation.navigate('Detail', { id: `${item.id}` });
       }}>
       {item.image_id ? (
         <Image
           style={styles.card}
           source={{
             uri:
-              `https://www.artic.edu/iiif/2/` +
+              'https://www.artic.edu/iiif/2/' +
               item.image_id +
-              `/full/843,/0/default.jpg`,
-          }}></Image>
+              '/full/843,/0/default.jpg'
+          }} />
       ) : (
         <Image
           style={styles.card}
-          source={require('../assets/images/placeholder-image.jpg')}></Image>
+          source={require('../assets/images/placeholder-image.jpg')} />
       )}
     </TouchableOpacity>
   );
@@ -56,21 +57,20 @@ const MainContent = ({navigation, data, refresh, fetchMore}) => {
     return (
       <ScrollView
         refreshControl={refresh}
-        style={{flex: 1, backgroundColor: '#fff'}}>
-        <BlankScreen style={{width: width, height: height}} />
+        style={{ flex: 1, backgroundColor: '#fff' }}>
+        <BlankScreen style={{ width: width, height: height }} />
       </ScrollView>
     );
   } else {
     return (
       <View style={styles.container}>
-        {initialLoading == true ? (
+        {initialLoading ? (
           <MainContentSkeleton refresh={refresh} />
         ) : (
           <FlatList
             data={data}
-            keyExtractor={(item, index) => index.toString()}
             refreshControl={refresh}
-            renderItem={({item}) => <MemoizedValue item={item} />}
+            renderItem={({ item }) => <MemoizedValue item={item} />}
             numColumns={3}
             onEndReachedThreshold={0.4}
             onEndReached={fetchMore}
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'flex-start',
+    alignItems: 'flex-start'
   },
   card: {
     backgroundColor: '#EEE',
@@ -96,6 +96,6 @@ const styles = StyleSheet.create({
     height: width * 0.327,
     marginHorizontal: width * 0.003,
     marginBottom: width * 0.006,
-    resizeMode: 'cover',
-  },
+    resizeMode: 'cover'
+  }
 });

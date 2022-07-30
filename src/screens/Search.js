@@ -4,36 +4,59 @@ import {
   Text,
   View,
   Dimensions,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 import React from 'react';
-import SearchBar from '../components/SearchBar';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import SearchBar from '../components/SearchBar';
 import {
   clearKeyword,
   removeKeyword,
-  searchData,
+  searchData
 } from '../redux/actions/artAction';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
-const Search = ({navigation}) => {
+const Search = ({ navigation }) => {
   const dispatch = useDispatch();
-  const searchedKeyword = useSelector(
-    state => state.artReducer.searchedKeyword,
-  );
+  const { searchedKeyword } = useSelector(state => state.artReducer);
+  const handleNavigation = (item) => {
+    dispatch(searchData(item));
+    navigation.navigate('Home', {});
+  };
+  const renderContent = ({ item, index }) => {
+    if (index < 10) {
+      return (
+        <View style={styles.keywordPanel}>
+          <TouchableOpacity
+            onPress={handleNavigation}
+            style={styles.keywordCard}>
+            <Text style={styles.keyword}>{item}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              dispatch(removeKeyword(item));
+            }}
+            style={styles.iconCard}>
+            <MaterialCommunityIcons
+              name="close-circle"
+              size={20}
+              color="#000"
+            />
+          </TouchableOpacity>
+        </View>
+      );
+    }
+  };
   const renderFooter = () => {
     if (searchedKeyword.length > 0) {
       return (
         <View style={styles.footer}>
           <TouchableOpacity
-            style={{
-              backgroundColor: '#EEE',
-              paddingHorizontal: 15,
-              paddingVertical: 5,
-              borderRadius: 20,
-            }}
+            style={styles.btnFooter}
             onPress={() => {
               dispatch(clearKeyword());
             }}>
@@ -43,51 +66,19 @@ const Search = ({navigation}) => {
       );
     }
   };
+
   return (
-    <View style={{flex: 1, flexDirection: 'column'}}>
+    <View style={{ flex: 1 }}>
       <SearchBar isEnabled={true} isFocus={true} navigation={navigation} />
       <View
-        style={{
-          flex: 9,
-          backgroundColor: 'white',
-          paddingHorizontal: 10,
-          paddingVertical: 5,
-        }}>
-        <View style={{height: height * 0.05}}>
+        style={styles.headerLabel}>
+        <View style={{ height: height * 0.05 }}>
           <Text style={styles.label}>Recent Search</Text>
         </View>
         <FlatList
-          style={{height: height * 0.7}}
+          style={{ height: height * 0.7 }}
           data={searchedKeyword}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({item, index}) => {
-            if (index < 10) {
-              return (
-                <View style={styles.keywordPanel}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      dispatch(searchData(item));
-                      navigation.navigate('Home', {});
-                    }}
-                    style={styles.keywordCard}>
-                    <Text style={styles.keyword}>{item}</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    onPress={() => {
-                      dispatch(removeKeyword(item));
-                    }}
-                    style={styles.iconCard}>
-                    <MaterialCommunityIcons
-                      name="close-circle"
-                      size={20}
-                      color="#000"
-                    />
-                  </TouchableOpacity>
-                </View>
-              );
-            }
-          }}
+          renderItem={renderContent}
           ListFooterComponent={renderFooter}
         />
       </View>
@@ -98,9 +89,15 @@ const Search = ({navigation}) => {
 export default Search;
 
 const styles = StyleSheet.create({
+  headerLabel: {
+    flex: 9,
+    backgroundColor: 'white',
+    paddingHorizontal: 10,
+    paddingVertical: 5
+  },
   label: {
     fontWeight: '900',
-    fontSize: 18,
+    fontSize: 18
   },
   keywordPanel: {
     borderBottomColor: '#000',
@@ -108,23 +105,28 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingHorizontal: 10,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   keywordCard: {
-    width: '80%',
+    width: '80%'
   },
   keyword: {
     fontWeight: '500',
-    fontSize: 16,
+    fontSize: 16
   },
   iconCard: {
     width: '10%',
-    alignItems: 'flex-end',
+    alignItems: 'flex-end'
   },
   footer: {
     width: width,
     marginTop: 20,
-    alignItems: 'center',
-    // position: 'absolute',
+    alignItems: 'center'
   },
+  btnFooter: {
+    backgroundColor: '#EEE',
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    borderRadius: 20
+  }
 });

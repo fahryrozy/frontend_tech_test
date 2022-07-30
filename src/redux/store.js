@@ -1,20 +1,19 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {applyMiddleware, combineReducers} from 'redux';
-import {persistStore, persistReducer} from 'redux-persist';
-import {configureStore, getDefaultMiddleware} from '@reduxjs/toolkit';
+import { applyMiddleware } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import promise from 'redux-promise-middleware';
-import {composeWithDevTools} from 'redux-devtools-extension';
-import artReducer from './reducers/artReducer';
+import { composeWithDevTools } from 'redux-devtools-extension';
+
+import rootReducer from './reducers';
 
 const middleware = composeWithDevTools(applyMiddleware(promise, thunk));
 const persistConfig = {
   key: 'root',
-  storage: AsyncStorage,
+  storage: AsyncStorage
 };
-const rootReducer = combineReducers({
-  artReducer,
-});
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore(
   {
@@ -22,8 +21,8 @@ const store = configureStore(
     middleware: getDefaultMiddleware =>
       getDefaultMiddleware({
         immutableCheck: false,
-        serializableCheck: false,
-      }),
+        serializableCheck: false
+      })
   },
   middleware,
 );

@@ -1,21 +1,25 @@
 import {
   StyleSheet,
   TextInput,
-  Text,
   View,
   Dimensions,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useDispatch, useSelector} from 'react-redux';
-import {searchData} from '../redux/actions/artAction';
+import { useDispatch } from 'react-redux';
 
-const {width, height} = Dimensions.get('window');
+import { searchData } from '../redux/actions/artAction';
 
-const SearchBar = ({isEnabled, isFocus, navigation}) => {
+const { width, height } = Dimensions.get('window');
+
+const SearchBar = ({ isEnabled, isFocus, navigation }) => {
   const dispatch = useDispatch();
-  const isSearch = useSelector(state => state.artReducer.isSearch);
+  const handleSubmit = (e) => {
+    dispatch(searchData(e.nativeEvent.text));
+    navigation.navigate('Home', {});
+  };
+
   return (
     <View style={styles.searchBar}>
       {isFocus && (
@@ -27,14 +31,11 @@ const SearchBar = ({isEnabled, isFocus, navigation}) => {
       )}
       <View style={isFocus ? styles.inputStyleActive : styles.inputStyle}>
         {!isFocus && <Icon name="search" size={25} color="#900" />}
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <TextInput
-            placeholder={'Type your search here'}
-            style={{flex: 1, textAlign: 'center'}}
-            onSubmitEditing={e => {
-              dispatch(searchData(e.nativeEvent.text));
-              navigation.navigate('Home', {});
-            }}
+            placeholder="Type your search here"
+            style={{ flex: 1, textAlign: 'center' }}
+            onSubmitEditing={handleSubmit}
             editable={isEnabled}
             autoFocus={isFocus}
           />
@@ -55,14 +56,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     zIndex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   backIconWrapper: {
     top: 10,
     width: width * 0.1,
     height: height * 0.065,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   inputStyle: {
     top: 10,
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 2,
-    backgroundColor: '#EEE',
+    backgroundColor: '#EEE'
   },
   inputStyleActive: {
     top: 10,
@@ -84,6 +85,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 2,
-    backgroundColor: '#EEE',
-  },
+    backgroundColor: '#EEE'
+  }
 });

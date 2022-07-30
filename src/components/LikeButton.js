@@ -1,15 +1,13 @@
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import Animated, {
-  useSharedValue,
-  withSpring,
   useAnimatedStyle,
   Extrapolate,
-  interpolate,
+  interpolate
 } from 'react-native-reanimated';
 import React from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const LikeButton = ({onPress, likeIndicator, isLiked, data}) => {
+const LikeButton = ({ onPress, likeIndicator, isLiked }) => {
   const outlineStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -19,9 +17,9 @@ const LikeButton = ({onPress, likeIndicator, isLiked, data}) => {
             [0, 1],
             [1, 0],
             Extrapolate.CLAMP,
-          ),
-        },
-      ],
+          )
+        }
+      ]
     };
   });
 
@@ -29,10 +27,10 @@ const LikeButton = ({onPress, likeIndicator, isLiked, data}) => {
     return {
       transform: [
         {
-          scale: likeIndicator.value,
-        },
+          scale: likeIndicator.value
+        }
       ],
-      opacity: likeIndicator.value,
+      opacity: likeIndicator.value
     };
   });
   return (
@@ -61,6 +59,6 @@ export default LikeButton;
 
 const styles = StyleSheet.create({
   button: {
-    width: 40,
-  },
+    width: 40
+  }
 });

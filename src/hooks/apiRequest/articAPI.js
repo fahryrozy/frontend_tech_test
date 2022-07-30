@@ -1,4 +1,5 @@
-import {fetchArticAPI} from '../formHelper/articAPI';
+/* eslint-disable no-console */
+import { fetchArticAPI } from '../formHelper/articAPI';
 
 export const getData = async page => {
   try {
@@ -8,6 +9,7 @@ export const getData = async page => {
       {},
     );
   } catch (error) {
+    console.log(error);
     throw error;
   }
 };
@@ -20,6 +22,7 @@ export const getDetailData = async id => {
       {},
     );
   } catch (error) {
+    console.log(error);
     throw error;
   }
 };
@@ -32,6 +35,7 @@ export const searchDataArt = async query => {
       {},
     );
   } catch (error) {
+    console.log(error);
     throw error;
   }
 };
