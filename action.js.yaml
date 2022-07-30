@@ -1,0 +1,41 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js 12
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - run: npm i
+    - run: ./gradlew assembleRelease
+      working-directory: android
+      name: Build android apk
+      
+    - uses: actions/upload-artifact@v2
+      with: 
+        name: android-apk
+        path: '**/*.apk'
+        
+    - name: send to telegram
+      run: curl -F "chat_id=${{ secrets.ID }}" 
+          -F document=@"android/app/build/outputs/apk/release/app-release.apk" 
+          -F caption=" <b>Hi there</b>,
+          latest commit for $GITHUB_REPOSITORY is here on <code>$GITHUB_SHA</code>
+          
+          please kindly check the update
+          "
+          -F parse_mode=html 
+          https://api.telegram.org/bot${{ secrets.TOKEN }}/sendDocument
