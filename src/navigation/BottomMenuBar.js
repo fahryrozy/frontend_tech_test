@@ -3,8 +3,8 @@ import React from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import Home from '../screens/Home';
-import Saved from '../screens/Saved';
+import Home from '../screens/Home/Home';
+import Saved from '../screens/Saved/Saved';
 
 const Tab = createBottomTabNavigator();
 

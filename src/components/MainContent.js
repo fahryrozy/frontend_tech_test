@@ -3,7 +3,6 @@ import {
   Dimensions,
   View,
   TouchableOpacity,
-  Image,
   FlatList,
   ActivityIndicator,
   ScrollView
@@ -14,37 +13,19 @@ import { useSelector } from 'react-redux';
 import BlankScreen from '../screens/BlankScreen';
 
 import MainContentSkeleton from './MainContentSkeleton';
+import ArtImageGrid from './ArtImageGrid';
 
 const { width, height } = Dimensions.get('window');
 
-const MainContent = ({ navigation, data, refresh, fetchMore }) => {
+const MainContent = ({ nav, data, refresh, fetchMore }) => {
   const { initialLoading, isLoading } = useSelector(state => state.artReducer);
   const MemoizedValue = memo(({ item }) => {
     return <RenderItem item={item} />;
   });
-  const handleNavigation = (item) => {
-    navigation.navigate('Detail', { id: `${item.id}` });
-  };
 
   const RenderItem = ({ item }) => (
-    <TouchableOpacity
-      testID="navigateToDetail"
-      onPress={handleNavigation}>
-      {item.image_id ? (
-        <Image
-          style={styles.card}
-          source={{
-            uri:
-              'https://www.artic.edu/iiif/2/' +
-              item.image_id +
-              '/full/843,/0/default.jpg',
-            cache: 'only-if-cached'
-          }} />
-      ) : (
-        <Image
-          style={styles.card}
-          source={require('../assets/images/placeholder-image.jpg')} />
-      )}
+    <TouchableOpacity onPress={()=> nav({ id: item.id })}>
+      <ArtImageGrid image_id={item.image_id} />
     </TouchableOpacity>
   );
 
@@ -92,13 +73,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start'
-  },
-  card: {
-    backgroundColor: '#EEE',
-    width: width * 0.327,
-    height: width * 0.327,
-    marginHorizontal: width * 0.003,
-    marginBottom: width * 0.006,
-    resizeMode: 'cover'
   }
 });

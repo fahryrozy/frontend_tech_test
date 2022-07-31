@@ -16,12 +16,12 @@ const DetailSkeleton = () => {
         </SkeletonPlaceholder>
         <View style={styles.panel}>
           <MaterialIcons name={'favorite-border'} size={30} color={'#000'} />
-          <SkeletonPlaceholder>
-            <View style={styles.credit} />
-          </SkeletonPlaceholder>
           <View>
-            <Text />
+            <Text style={styles.label}>Credit</Text>
           </View>
+          <SkeletonPlaceholder>
+            <View style={styles.infoSkeleton} />
+          </SkeletonPlaceholder>
         </View>
 
         <View>
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     height: width * 0.9
   },
   panel: {
-    minHeight: height * 0.1,
+    minHeight: '10%',
     paddingVertical: 5
   },
   credit: {

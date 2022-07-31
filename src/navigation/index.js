@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Detail from '../screens/Detail';
-import Search from '../screens/Search';
+import Detail from '../screens/Detail/Detail';
+import Search from '../screens/Search/Search';
 import SplashScreen from '../screens/SplashScreen';
 
 import BottomMenuBar from './BottomMenuBar';
+import { navigationRef } from './RootNavigation';
 
 const Stack = createStackNavigator();
 
@@ -23,7 +24,7 @@ const Navigation = () => {
     return <SplashScreen />;
   } else {
     return (
-      <NavigationContainer>
+      <NavigationContainer ref={navigationRef} >
         <Stack.Navigator
           initialRouteName={BottomMenuBar}
           screenOptions={{ headerShown: false, headerMode: 'float' }}>
